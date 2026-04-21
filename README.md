@@ -25,6 +25,7 @@ Aplicação de bem‑estar emocional para registrar como a pessoa está se senti
 ![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 
 ## Endpoints
 
@@ -59,6 +60,24 @@ npm run dev
 ```
 
 API disponível em http://localhost:3333
+
+## Rodar com Docker
+
+Pré-requisito: Docker instalado.
+
+```bash
+# build da imagem
+docker build -t mindcare-backend .
+
+# subir o container (ajuste a DATABASE_URL se necessário)
+docker run --rm -p 3333:3333 \
+  -e DATABASE_URL="postgresql://usuario:senha@host.docker.internal:5432/mindcare" \
+  -e CORS_ORIGINS="http://localhost:5173" \
+  -e PORT=3333 \
+  mindcare-backend
+```
+
+Se preferir, posso adicionar também um `docker-compose.yml` com PostgreSQL.
 
 ## Exemplo rápido
 
