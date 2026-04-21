@@ -1,0 +1,14 @@
+node_modules
+dist
+coverage
+.cache
+.turbo
+.eslintcache
+.vscode
+.idea
+.git
+.github
+.env
+.env.*
+!.env.example
+*.log
