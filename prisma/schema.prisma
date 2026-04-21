@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SyncToken {
+  id             String         @id @default(cuid())
+  token          String         @unique
+  nickname       String?
+  createdAt      DateTime       @default(now())
+  checkIns       CheckIn[]
+  journalEntries JournalEntry[]
+}
+
+model JournalEntry {
+  id        String    @id @default(cuid())
+  prompt    String
+  content   String
+  createdAt DateTime  @default(now())
+  tokenId   String
+  token     SyncToken @relation(fields: [tokenId], references: [id])
+}
+
+model CheckIn {
+  id        String    @id @default(cuid())
+  emotion   String
+  intensity Int
+  timestamp DateTime
+  tokenId   String
+  token     SyncToken @relation(fields: [tokenId], references: [id])
+}
