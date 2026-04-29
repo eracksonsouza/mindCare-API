@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model SyncToken {
@@ -32,4 +31,11 @@ model CheckIn {
   timestamp DateTime
   tokenId   String
   token     SyncToken @relation(fields: [tokenId], references: [id])
+}
+
+model AvatarUser {
+  id           String   @id @default(cuid())
+  avatarName   String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
 }
