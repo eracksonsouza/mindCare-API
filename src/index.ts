@@ -1,9 +1,11 @@
+import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import tokenRouter from "./routes/token";
 import checkinsRouter from "./routes/checkins";
 import analyticsRouter from "./routes/analytics";
 import journalRouter from "./routes/journal";
+import authRouter from "./routes/auth";
 
 const app = express();
 const PORT = process.env.PORT || 3333;
@@ -32,6 +34,7 @@ app.use("/api/token", tokenRouter);
 app.use("/api/checkins", checkinsRouter);
 app.use("/api/analytics", analyticsRouter);
 app.use("/api/journal", journalRouter);
+app.use("/api/auth", authRouter);
 
 app.use((_req: Request, res: Response) => {
   res.status(404).json({ error: "Rota não encontrada" });
