@@ -7,8 +7,6 @@ RUN npm ci
 
 COPY tsconfig.json ./
 COPY prisma ./prisma
-RUN npx prisma generate
-
 COPY src ./src
 RUN npm run build
 
@@ -25,4 +23,4 @@ COPY prisma ./prisma
 
 EXPOSE 3333
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]
+CMD ["sh", "-c", "node_modules/.bin/prisma migrate deploy && node dist/index.js"]
