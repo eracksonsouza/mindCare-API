@@ -28,18 +28,6 @@ async function bootstrap() {
     optionsSuccessStatus: 204,
   });
 
-  app.options("/*", async (req, reply) => {
-    const origin = req.headers.origin;
-    if (!origin || origin === ALLOWED_ORIGIN) {
-      reply
-        .header("Access-Control-Allow-Origin", origin ?? ALLOWED_ORIGIN)
-        .header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")
-        .header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    }
-
-    reply.status(204).send();
-  });
-
   await app.register(fastifyExpress);
   app.use(express.json({ limit: "50kb" }));
 
