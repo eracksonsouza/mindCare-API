@@ -12,17 +12,22 @@ import authRouter from "./routes/auth";
 const app = Fastify();
 const PORT = Number(process.env.PORT ?? 3333);
 
-const ALLOWED_ORIGIN = "https://mindcare-app-mu.vercel.app";
+const ALLOWED_ORIGINS = [
+  "https://mindcare-app-mu.vercel.app",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+];
 
 async function bootstrap() {
   await app.register(fastifyCors, {
     origin: (origin, callback) => {
-      if (!origin || origin === ALLOWED_ORIGIN) {
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
         callback(null, true);
         return;
       }
-  callback(new Error("Origin not allowed by CORS"), false);
+      callback(new Error("Origin not allowed by CORS"), false);
     },
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     optionsSuccessStatus: 204,
